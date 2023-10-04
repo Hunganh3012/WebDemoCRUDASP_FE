@@ -1,0 +1,204 @@
+
+    <!-- <div class="formAdd">
+        <form autocapitalize="off" #myForm="ngForm" (ngSubmit)="myForm.form.valid && submit(myForm)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="hidden" name="id" [value]="empService.employeeData.id">
+
+
+                        <label for="name">Tên:</label>
+                        <input type="text" name="name" class="form-control"
+                         placeholder="Nhập tên" #name="ngModel" [(ngModel)]="empService.employeeData.name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="name" class="float-left">Họ:</label>
+
+                        <input type="text" name="lastname" class="form-control" placeholder="Nhập Họ" #lastname="ngModel" [(ngModel)]="empService.employeeData.lastName" required>
+                    </div>
+     
+                    <div class="col-md-3">
+                        <label for="name" class="float-left">Email:</label>
+
+                        <input type="Email" name="email" class="form-control" placeholder="Nhập Email" #email="ngModel" [(ngModel)]="empService.employeeData.email" required>
+                    </div>
+     
+                    <div class="col-md-3">
+                        <label for="name" class="float-left">Tuổi:</label>
+                        <div *ngIf="age.invalid && (age.touched || age.dirty)" class="float-right">
+                            <p class="text-danger">Required</p>
+                        </div>
+                        <input type="number" name="age" class="form-control" placeholder="Nhập tuổi" #age="ngModel" [(ngModel)]="empService.employeeData.age" required>
+                    </div>
+                </div>
+     
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="date" class="label float-left">Ngày vào làm việc:</label>
+
+                        <input type="date" class="form-control" name="doj" [(ngModel)]="empService.employeeData.doj" #doj="ngModel" required>
+                    </div>
+     
+     
+                    <div class="col-md-3">
+                        <label for="designation" class="label float-left">Chức vụ</label>
+ 
+                        <select name="designationID" class="form-control" #designationId="ngModel" [(ngModel)]="empService.employeeData.designationId" required>
+                            <option   value="empService.employeeData.designationId"></option>
+                            <option value="0">Vui lòng chọn</option>
+                            <option  *ngFor="let desg of empService.listDesignation" [ngValue]="desg.id">{{ desg.designation }}</option>
+                        </select>
+                    
+                    </div>
+     
+                    <div class="col-md-6">
+                        <label for="gender">Giới tính</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                                <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                      <input type="radio" checked="true" id="rbtn" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)]="empService.employeeData.gender" value="Nam">Nam
+                                    </label>
+                                </div>
+                                  
+                                  <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                      <input type="radio" id="rbtn" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)]="empService.employeeData.gender" value="Nữ">Nữ
+                                    </label>
+                                  </div>
+     
+                                  <div class="form-check-inline">
+                                    <label class="form-check-label">
+                                      <input type="radio" id="rbtn" class="form-check-input" name="gender" #gender="ngModel" [(ngModel)]="empService.employeeData.gender" value="others">Khác
+                                    </label>
+                                  </div>
+                                  
+                            </div>
+     
+                
+                        </div>
+                    </div>
+     
+                    
+                </div>
+     
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2">
+                        <button type="submit"[disabled]="designationId.value===0" class="btn btn-success btn-block">Lưu</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-danger btn-block">Hủy</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div> -->
+    <!-- <form nz-form [formGroup]="validateform" class="ant-advanced-search-form"> -->
+      <!-- <input #checkbox1 type="checkbox" name="toggle" id="toggle">
+      <label for="toggle"></label> -->
+      <div class="container">
+      </div>
+    <form autocomplete="off"  nz-form  class="ant-advanced-search-form">
+        <div nz-row [nzGutter]="24">
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label nzSpan="24">Họ </nz-form-label>
+              <nz-form-control nzSpan="24">
+                <input
+                  name="LastName"
+                  [(ngModel)]="commonFilter.LastName"
+                  nz-input
+                  placeholder="Nhập Họ"
+  
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item >
+              <nz-form-label nzSpan="24">Tên:</nz-form-label>
+              <nz-form-control nzSpan="24">
+                <input
+                name="Name"
+                [(ngModel)]="commonFilter.Name"
+                  nz-input
+                  placeholder="Nhập Tên"
+  
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item >
+              <nz-form-label nzSpan="24">Email:</nz-form-label>
+              <nz-form-control nzSpan="24">
+                <input
+                    [(ngModel)]="commonFilter.Email"
+                    type="email"
+                  nz-input
+                  placeholder="Nhập Email"
+                  [(ngModel)]="empService.employeeData.email" [ngModelOptions]="{standalone: true}"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="4" >
+            <nz-form-item>
+              <nz-form-label nzSpan="24">Tuổi</nz-form-label>
+              <nz-form-control nzSpan="24">
+                <nz-input-number    [(ngModel)]="commonFilter.Age" [ngModelOptions]="{standalone: true}" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number> 
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="4" >
+            <nz-form-item>
+              <nz-form-label nzSpan="24">Ngày vào làm</nz-form-label>
+              <nz-form-control>
+                <nz-date-picker
+                
+                [(ngModel)]="commonFilter.Doj"[ngModelOptions]="{standalone: true}" #doj="ngModel"
+                    nzFormat="dd-MM-YYYY"
+                    [nzDisabledDate]="disabledDate"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+            <nz-form-item>
+              <nz-form-label nzSpan="24">Giới tính</nz-form-label>
+              <nz-form-control nzSpan="24">
+                <nz-radio-group name="gender" #gender="ngModel" [(ngModel)]="commonFilter.Gender"  [ngModelOptions]="{standalone: true}" nzName="radiogroup">
+                    <label   nz-radio nzValue="Nam">Nam</label>
+                    <label   nz-radio nzValue="Nữ">Nữ</label>
+                    <label   nz-radio nzValue="Khác">Khác</label>
+                  </nz-radio-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col [nzSpan]="8" >
+     
+              <nz-form-label nzSpan="24">Chức vụ</nz-form-label>
+                <nz-form-control nzSpan="24">
+                    <nz-select  [(ngModel)]="commonFilter.DesignationID"  [ngModelOptions]="{standalone: true} "nzAllowClear nzPlaceHolder="Chọn" nzShowSearch>
+                        <nz-option *ngFor="let desg of empService.listDesignation" nzValue="{{desg.id}}" nzLabel="{{desg.designation}}"></nz-option>
+                        </nz-select>
+                </nz-form-control>
+              
+            
+          </div>
+          
+        </div>
+        <div nz-row>
+          <div nz-col [nzSpan]="24" class="search-area">
+            <button  nz-button [nzType]="'primary'"(click)="search() " >Tìm kiếm</button>
+             <button nz-button [nzType]="'primary'" (click)="clear()">Làm mới</button>
+           <!-- <a class="collapse" (click)="toggleCollapse()">
+              Collapse
+              <span nz-icon [nzType]="isCollapse ? 'down' : 'up'"></span>
+            </a> -->
+          </div>
+        </div>
+      </form>

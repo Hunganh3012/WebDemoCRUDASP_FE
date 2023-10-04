@@ -1,0 +1,254 @@
+<div class="container mt-3">
+    <app-employee-form></app-employee-form>
+   
+</div>
+<div class="mt-3 mb-3 mr-3 container">
+  <button nz-button [nzType]="'primary'" style="right:30%;" (click)="Delete()"> Xóa </button>
+  
+    <button nz-button [nzType]="'primary'" class="mr-3 " style="left:82%; " (click)="Searchpopup"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button nz-button [nzType]="'primary'" style="left:82%; "(click)="showModal()">Thêm mới</button>
+
+   
+</div>  
+
+<form nz-form #myForm="ngForm"  class="ant-advanced-search-form">
+<nz-modal  nzMaskClosable="false" [(nzVisible)]="isVisibleAdd" nzTitle="Thêm Nhân sự" nzOkText = "Lưu" nzClosable="false" (nzOnCancel)="handleCancel()" (nzOnOk)="submitAdd(myForm)">
+    <ng-container *nzModalContent>
+            <div nz-row [nzGutter]="24">
+              <div nz-col [nzSpan]="8" >
+                <nz-form-item>
+                  <nz-form-label nzSpan="24">Họ </nz-form-label>
+                  <nz-form-control nzSpan="24">
+                    <input
+                      nz-input
+                      placeholder="Nhập Họ"
+                      [(ngModel)]="empService.employeeData.lastName"
+                      [ngModelOptions]="{standalone: true}"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="8" >
+                <nz-form-item >
+                  <nz-form-label nzSpan="24">Tên:</nz-form-label>
+                  <nz-form-control nzSpan="24">
+                    <input
+                      nz-input
+                      placeholder="Nhập Tên"
+                      [(ngModel)]="empService.employeeData.name"
+                      [ngModelOptions]="{standalone: true}"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="8" >
+                <nz-form-item >
+                  <nz-form-label nzSpan="24">Email:</nz-form-label>
+                  <nz-form-control nzSpan="24">
+                    <input
+                        type="email"
+                      nz-input
+                      placeholder="Nhập Email"
+                      [(ngModel)]="empService.employeeData.email"
+                      [ngModelOptions]="{standalone: true}"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="4" >
+                <nz-form-item>
+                  <nz-form-label nzSpan="24">Tuổi</nz-form-label>
+                  <nz-form-control nzSpan="24">
+                    <nz-input-number  [(ngModel)]="empService.employeeData.age" [ngModelOptions]="{standalone: true}"  [nzMin]="1" [nzMax]="200" [nzStep]="1"></nz-input-number> 
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="4" >
+                <nz-form-item>
+                  <nz-form-label nzSpan="24">Ngày vào làm</nz-form-label>
+                  <nz-form-control>
+                    <nz-date-picker
+                    [(ngModel)]="empService.employeeData.doj"[ngModelOptions]="{standalone: true}" #doj="ngModel"
+                        nzFormat="dd-MM-YYYY"
+                        [nzDisabledDate]="disabledDate"
+                    ></nz-date-picker>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="8" >
+                <nz-form-item>
+                  <nz-form-label nzSpan="24">Giới tính</nz-form-label>
+                  <nz-form-control nzSpan="24">
+                    <nz-radio-group name="gender" #gender="ngModel" [(ngModel)]="empService.employeeData.gender"  [ngModelOptions]="{standalone: true}" nzName="radiogroup">
+                        <label nz-radio nzValue="Nam " [ngModel]>Nam</label>
+                        <label nz-radio nzValue="Nữ">Nữ</label>
+                        <label nz-radio nzValue="Khác">Khác</label>
+                      </nz-radio-group>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col [nzSpan]="8" >
+         
+                  <nz-form-label nzSpan="24">Chức vụ</nz-form-label>
+                    <nz-form-control nzSpan="24">
+                        <nz-select   [(ngModel)]="empService.employeeData.designationID"  [ngModelOptions]="{standalone: true} "nzAllowClear nzPlaceHolder="Chọn" nzShowSearch>
+                            <nz-option *ngFor="let desg of empService.listDesignation" nzValue="{{desg.id}}" nzLabel="{{desg.designation}}"></nz-option>
+                            </nz-select>
+                    </nz-form-control>
+                  
+                
+              </div>
+              
+            </div>
+           
+        </ng-container>
+    </nz-modal>
+</form>
+<form nz-form #myForm="ngForm"  class="ant-advanced-search-form">
+  <nz-modal  nzMaskClosable="false" [(nzVisible)]="isVisibleEdit" nzTitle="Điều chỉnh Nhân sự" nzOkText = "Cập nhật" nzClosable="false" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="submitEdit(myForm)">
+      <ng-container *nzModalContent>
+              <div nz-row [nzGutter]="24">
+                <div nz-col [nzSpan]="8" >
+                  <nz-form-item>
+                    <nz-form-label nzSpan="24">Họ </nz-form-label>
+                    <nz-form-control nzSpan="24">
+                      <input
+                        nz-input
+                        placeholder="Nhập Họ"
+                        [(ngModel)]="detail.lastName"
+                        [ngModelOptions]="{standalone: true}"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8" >
+                  <nz-form-item >
+                    <nz-form-label nzSpan="24">Tên:</nz-form-label>
+                    <nz-form-control nzSpan="24">
+                      <input
+                        nz-input
+                        placeholder="Nhập Tên"
+                        [(ngModel)]="detail.name"
+                        [ngModelOptions]="{standalone: true}"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8" >
+                  <nz-form-item >
+                    <nz-form-label nzSpan="24">Email:</nz-form-label>
+                    <nz-form-control nzSpan="24">
+                      <input
+                          type="email"
+                        nz-input
+                        placeholder="Nhập Email"
+                        [(ngModel)]="detail.email"
+                        [ngModelOptions]="{standalone: true}"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="4" >
+                  <nz-form-item>
+                    <nz-form-label nzSpan="24">Tuổi</nz-form-label>
+                    <nz-form-control nzSpan="24">
+                      <nz-input-number  [(ngModel)]="detail.age" [ngModelOptions]="{standalone: true}"  [nzMin]="1" [nzMax]="200" [nzStep]="1"></nz-input-number> 
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="4" >
+                  <nz-form-item>
+                    <nz-form-label nzSpan="24">Ngày vào làm</nz-form-label>
+                    <nz-form-control>
+                      <nz-date-picker
+                      [(ngModel)]="detail.doj"[ngModelOptions]="{standalone: true}" #doj="ngModel"
+                          nzFormat="dd-MM-YYYY"
+                          [nzDisabledDate]="disabledDate"
+                      ></nz-date-picker>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8" >
+                  <nz-form-item>
+                    <nz-form-label nzSpan="24">Giới tính</nz-form-label>
+                    <nz-form-control nzSpan="24">
+                      <nz-radio-group name="gender" #gender="ngModel" [(ngModel)]="detail.gender"  [ngModelOptions]="{standalone: true}" nzName="radiogroup">
+                          <label nz-radio nzValue="Nam " [ngModel]>Nam</label>
+                          <label nz-radio nzValue="Nữ">Nữ</label>
+                          <label nz-radio nzValue="Khác">Khác</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col [nzSpan]="8" >
+           
+                    <nz-form-label nzSpan="24">Chức vụ</nz-form-label>
+                      <nz-form-control nzSpan="24">
+                          <nz-select   [(ngModel)]="detail.designationId"  [ngModelOptions]="{standalone: true} "nzAllowClear nzPlaceHolder="Chọn" nzShowSearch>
+                              <nz-option *ngFor="let desg of empService.listDesignation" nzValue="{{desg.id}}" nzLabel="{{desg.designation}}"></nz-option>
+                              </nz-select>
+                      </nz-form-control>
+                    
+                  
+                </div>
+                
+              </div>
+             
+          </ng-container>
+      </nz-modal>
+  </form>
+  <nz-table
+      #rowSelectionTable
+      nzShowSizeChanger
+      [nzData]=" empService.listEmployee"
+      (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
+    >
+      <thead>
+        <tr>
+          <th
+            [(nzChecked)]="checked"
+            [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="onAllChecked($event)"
+          ></th>
+          <th>Họ</th>
+          <th>Tên đầy đủ</th>
+          <th>Độ tuổi</th>
+          <th>Giới tính</th>
+          <th>Email</th>
+          <th>Ngày vào làm</th>
+          <th>Vị trí chức vụ</th>
+          <th>Tùy chọn</th>
+
+        </tr>
+      </thead>  
+      <tbody>
+        <tr *ngFor="let emp of rowSelectionTable.data ;let i=index ">
+            <td [nzChecked]="setOfCheckedId.has(emp.id)" 
+            [nzDisabled]="emp.ischecked"
+            (nzCheckedChange)="onItemChecked(emp.id, $event)">
+          </td>
+          <td>{{emp.lastName}}</td>
+          <td>{{emp.name}}</td>
+            <td>{{emp.age}}</td>
+            <td>{{emp.gender}}</td>
+            <td>{{emp.email}}</td>
+            <td>{{emp.doj | date:'dd-MM-YYYY'}}
+            <td>{{emp.designation}}</td>
+            <td>
+              <div class="dropdown">
+                  <button class="btn  " style="background:#2196f3 ; color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      
+                      <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <!-- <button class="dropdown-item" nz-button [nzType]="'primary'" (click)="showModal()">Sửa</button> -->
+
+                    <button   class="dropdown-item "  href="#"(click)="populateEmployee(emp.id)">Sửa</button>
+                    <button class="dropdown-item "href="#"(click)="Deleteonly(emp.id)">Xóa</button>
+
+                  </div>
+                </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
